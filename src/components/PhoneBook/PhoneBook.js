@@ -1,15 +1,9 @@
 import { ContactList } from 'components/ContactList/ContactList';
-import { nanoid } from 'nanoid';
 import { Filter } from 'components/Filter/Filter';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Container } from 'components/PhoneBook/PhoneBook.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  addContact,
-  getContactsData,
-  updateFilter,
-  deleteCard,
-} from 'redux/contactsSlice';
+import { useSelector } from 'react-redux';
+import { getContactsData } from 'redux/contactsSlice';
 
 export const PhoneBook = () => {
   // const [contacts, setContacts] = useState(() => {
@@ -21,58 +15,57 @@ export const PhoneBook = () => {
   //   localStorage.setItem('contacts', JSON.stringify(contacts));
   // }, [contacts]);
 
-  const dispatch = useDispatch();
-  const { contactsList, filter } = useSelector(getContactsData);
+  const { contactsList } = useSelector(getContactsData);
 
-  const handleSubmit = (values, { resetForm }) => {
-    resetForm();
+  // const handleSubmit = (values, { resetForm }) => {
+  //   resetForm();
 
-    const { name, number } = values;
-    const contact = {
-      name,
-      number,
-    };
-    const sameContact = checkContactsBook(contact, contactsList);
-    sameContact
-      ? alert(`${contact.name} has been already added`)
-      : dispatch(addContact({ ...values, id: nanoid() }));
-  };
+  //   const { name, number } = values;
+  //   const contact = {
+  //     name,
+  //     number,
+  //   };
+  //   const sameContact = checkContactsBook(contact, contactsList);
+  //   sameContact
+  //     ? alert(`${contact.name} has been already added`)
+  //     : dispatch(addContact({ ...values, id: nanoid() }));
+  // };
 
-  const checkContactsBook = (contact, contactsList) => {
-    return contactsList.find(
-      item => item.name.toLowerCase() === contact.name.toLowerCase()
-    );
-  };
+  // const checkContactsBook = (contact, contactsList) => {
+  //   return contactsList.find(
+  //     item => item.name.toLowerCase() === contact.name.toLowerCase()
+  //   );
+  // };
 
-  const onFilterChange = e => {
-    dispatch(updateFilter(e.currentTarget.value));
-  };
+  // const onFilterChange = e => {
+  //   dispatch(updateFilter(e.currentTarget.value));
+  // };
 
-  const onFilterContact = () => {
-    return contactsList.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
+  // const onFilterContact = () => {
+  //   return contactsList.filter(contact =>
+  //     contact.name.toLowerCase().includes(filter.toLowerCase())
+  //   );
+  // };
 
-  const deleteContact = contactId => {
-    dispatch(deleteCard(contactId));
-  };
+  // const deleteContact = contactId => {
+  //   dispatch(deleteCard(contactId));
+  // };
 
-  const findContacts = onFilterContact();
+  // const findContacts = onFilterContact();
 
   return (
     <Container>
       <h1>Phonebook</h1>
-      <ContactForm onSubmit={handleSubmit} />
+      <ContactForm />
 
       {!!contactsList.length && (
         <>
           <h2>Contacts</h2>
-          <Filter value={filter} onFilterChange={onFilterChange} />
+          <Filter />
         </>
       )}
 
-      <ContactList findContacts={findContacts} deleteContact={deleteContact} />
+      <ContactList />
     </Container>
   );
 };
