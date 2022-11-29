@@ -40,8 +40,6 @@ export const ContactForm = () => {
   const { contactsList } = useSelector(getContactsData);
 
   const handleSubmit = (values, { resetForm }) => {
-    resetForm();
-
     const { name, number } = values;
     const contact = {
       name,
